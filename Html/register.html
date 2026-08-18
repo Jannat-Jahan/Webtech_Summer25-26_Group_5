@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>User Registration</title>
+
+    <link rel="stylesheet" href="../Design/Style.css">
+    <script src="../JavaScript/Script.js"></script>
+</head>
+
+<body>
+
+    <div class="position">
+
+        <div class="Header">
+            <h1>Flat Rental Management System</h1>
+        </div>
+
+
+
+        <div class="topnav">
+
+            <a href="index.html">Home</a>
+            |
+            <a href="login.html">Login</a>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="container">
+
+        <h1>User Registration</h1>
+
+        <fieldset>
+
+            <legend>Personal Information</legend>
+
+
+            <form>
+
+                <table>
+
+                    <!-- Full Name -->
+
+                    <tr>
+
+                        <td>
+                            <label for="name">
+                                Full Name
+                            </label>
+                        </td>
+
+                        <td>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="Enter Your Full Name"
+                            >
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            <label for="dob">
+                                DOB
+                            </label>
+                        </td>
+
+                        <td>
+                            <input
+                                type="date"
+                                id="dob"
+                                name="dob"
+                            >
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            <label for="phone">
+                                Phone
+                            </label>
+                        </td>
+
+                        <td>
+                            <input
+                                type="text"
+                                id="phone"
+                                name="phone"
+                                placeholder="Enter Your Phone Number"
+                            >
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <label for="email">
+                                Email
+                            </label>
+                        </td>
+
+                        <td>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter Your Email"
+                            >
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <label for="nid">
+                                NID file
+                            </label>
+                        </td>
+
+                        <td>
+                            <input
+                                type="file"
+                                id="nid"
+                                name="nid"
+                            >
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            <label for="citizenship">
+                                Citizenship
+                            </label>
+                        </td>
+
+                        <td>
+
+                            <select
+                                id="citizenship"
+                                name="citizenship"
+                            >
+
+                                <option value="">
+                                    Select Country
+                                </option>
+
+                                <option value="Bangladesh">
+                                    Bangladesh
+                                </option>
+
+                                <option value="USA">
+                                    USA
+                                </option>
+
+                                <option value="UK">
+                                    UK
+                                </option>
+
+                                <option value="Argentina">
+                                    Argentina
+                                </option>
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            <label>
+                                Profession
+                            </label>
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="checkbox"
+                                id="student"
+                                name="profession"
+                                value="Student"
+                            >
+
+                            <label for="student">
+                                Student
+                            </label>
+
+
+                            <input
+                                type="checkbox"
+                                id="faculty"
+                                name="profession"
+                                value="Faculty"
+                            >
+
+                            <label for="faculty">
+                                Faculty
+                            </label>
+
+
+                            <input
+                                type="checkbox"
+                                id="staff"
+                                name="profession"
+                                value="Staff"
+                            >
+
+                            <label for="staff">
+                                Staff
+                            </label>
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            <label for="address">
+                                Address
+                            </label>
+                        </td>
+
+                        <td>
+
+                            <textarea
+                                id="address"
+                                name="address"
+                                rows="5"
+                                cols="30"
+                            ></textarea>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            <label for="role">
+                                Register As
+                            </label>
+                        </td>
+
+                        <td>
+
+                            <select
+                                id="role"
+                                name="role"
+                            >
+
+                                <option value="">
+                                    Select Role
+                                </option>
+
+                                <option value="owner">
+                                    Home Owner
+                                </option>
+
+                                <option value="tenant">
+                                    Tenant
+                                </option>
+
+                            </select>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            <label for="username">
+                                Username
+                            </label>
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Enter Username"
+                            >
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            <label for="password">
+                                Password
+                            </label>
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter Password"
+                            >
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            <label for="confirmPassword">
+                                Confirm Password
+                            </label>
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                placeholder="Confirm Password"
+                            >
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+
+                <br>
+
+                <input
+                    type="checkbox"
+                    id="condition"
+                    name="condition"
+                    value="1"
+                >
+
+                <label for="condition">
+
+                    <font color="red">
+                        I agree to the Terms and Conditions*
+                    </font>
+
+                </label>
+
+
+                <br><br>
+
+                <input
+                    type="submit"
+                    id="submit"
+                    name="submit"
+                    value="Sign Up"
+                >
+
+                <input
+                    type="reset"
+                    id="reset"
+                    name="reset"
+                    value="Reset"
+                >
+
+            </form>
+
+        </fieldset>
+
+    </div>
+
+    <div class="footer">
+
+        <h2>Created 2026</h2>
+
+    </div>
+
+</body>
+
+</html>
