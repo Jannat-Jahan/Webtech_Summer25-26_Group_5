@@ -1,0 +1,347 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+body {
+    font-family: Cambria, Cochin, Georgia, serif;
+    background-color: wheat;
+    padding: 20px;
+}
+
+
+
+.Header h1 {
+    background-color: #12372A;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+
+
+
+.topnav {
+    background-color: #1D5B4F;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.topnav a {
+    float: left;
+    color: white;
+    text-decoration: none;
+    padding: 15px 20px;
+    font-size: 20px;
+}
+
+.topnav a:hover {
+    background-color: white;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: white;
+    color: black;
+}
+
+
+
+.container {
+    margin: auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+
+
+.dashboard-container,
+.profile-container {
+    max-width: 1200px;
+    box-shadow: 0 10px 20px gray;
+}
+
+
+.add-listing-container {
+    max-width: 800px;
+}
+
+
+.listings-container {
+    max-width: 1500px;
+}
+
+
+h2 {
+    margin-bottom: 20px;
+}
+
+
+.add-listing-container > h2,
+.listings-container > h2 {
+    text-align: center;
+}
+
+
+.welcome {
+    margin-bottom: 30px;
+}
+
+.welcome h2 {
+    font-size: 30px;
+}
+
+
+.cards {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    flex: 1;
+    background-color: antiquewhite;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid gray;
+}
+
+.card h1 {
+    color: green;
+}
+
+
+.content {
+    display: flex;
+    gap: 20px;
+}
+
+.recent {
+    width: 70%;
+}
+
+.recent h2 {
+    margin-bottom: 20px;
+}
+
+.featured {
+    width: 30%;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.featured img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.featured h2 {
+    margin-top: 15px;
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid gray;
+    padding: 15px;
+    text-align: center;
+}
+
+th {
+    background-color: antiquewhite;
+}
+
+fieldset {
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: antiquewhite;
+}
+
+label {
+    font-family: Cambria, Cochin, Georgia, serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #12372A;
+}
+
+legend {
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+.add-listing-container table {
+    width: 100%;
+}
+
+.add-listing-container td {
+    padding: 10px;
+}
+
+
+input,
+textarea {
+    width: 70%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+    font-size: 20px;
+}
+
+
+
+input[type="submit"],
+input[type="reset"] {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    width:100%;
+    border-radius: 10px;
+    background-color: #1D5B4F;
+    color: white;
+    cursor: pointer;
+}
+
+input[type="reset"] {
+    background-color: red;
+}
+
+
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #1D5B4F;
+    color: white;
+    cursor: pointer;
+    font-family: Cambria, Cochin, Georgia, Times, serif;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #12372A;
+}
+
+
+.featured button {
+    width: 100%;
+    margin-top: 20px;
+}
+
+
+.listings-container button {
+    padding: 10px 30px;
+    font-size: 20px;
+    margin: 10px;
+}
+
+
+.profile-card {
+    width: 100%;
+}
+
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: antiquewhite;
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid gray;
+    margin-bottom: 25px;
+}
+
+.profile-header h2 {
+    font-size: 35px;
+    color: #12372A;
+    margin-bottom: 5px;
+}
+
+.profile-header p {
+    color: gray;
+    font-size: 18px;
+}
+
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #1D5B4F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+}
+
+.profile-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.info-box {
+    width: calc(50% - 10px);
+    background-color: antiquewhite;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid gray;
+}
+
+.info-box label {
+    display: block;
+    color: #12372A;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.info-box p {
+    color: black;
+    font-size: 17px;
+}
+
+
+.buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.buttons button {
+    padding: 10px 20px;
+}
+
+
+.back-btn {
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #1D5B4F;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.back-btn:hover {
+    background-color: #12372A;
+}
