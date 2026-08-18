@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete User / Listing - Room Rental System</title>
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
@@ -24,7 +24,7 @@
             flex-direction: column;
         }
 
-        /* Header Styling */
+        
         .top-header {
             width: 100%;
         }
@@ -69,7 +69,7 @@
             text-decoration: underline;
         }
 
-        /* Main Container */
+       
         .main-container {
             flex: 1;
             display: flex;
@@ -102,7 +102,7 @@
             margin-bottom: 30px;
         }
 
-        /* Danger / Notice Box */
+      
         .alert-warning {
             background-color: #FFF5F5;
             border-left: 4px solid #E53E3E;
@@ -121,7 +121,7 @@
             color: #E53E3E;
         }
 
-        /* Form Styling */
+        
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -161,7 +161,7 @@
             background-color: #ffffff;
         }
 
-        /* Delete Button */
+        
         .btn-delete-submit {
             background-color: #DC2626;
             color: #ffffff;
@@ -185,7 +185,7 @@
             transform: scale(0.98);
         }
 
-        /* Footer */
+       
         .footer {
             background-color: #0E1318;
             color: #ffffff;
@@ -199,7 +199,7 @@
 </head>
 <body>
 
-    <!-- Header / Navbar -->
+   
     <header class="top-header">
         <div class="header-title-bar">
             <h2>Admin Dashboard - Room Rental System</h2>
@@ -215,7 +215,7 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
+  
     <main class="main-container">
         <div class="content-card">
             <h1 class="title-text">Delete User or Listing</h1>
@@ -226,7 +226,7 @@
                 <span><strong>Caution:</strong> Deleting a user or listing is permanent and cannot be undone.</span>
             </div>
 
-            <!-- Delete Form -->
+            
             <form action="../Ajax/deleteUser.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
                 <div class="form-grid">
                     
@@ -259,7 +259,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
+   
     <footer class="footer">
         <p>&copy; 2026 Room Rental System. All rights reserved.</p>
     </footer>

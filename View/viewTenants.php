@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Tenants - Room Rental System</title>
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
@@ -24,7 +24,7 @@
             flex-direction: column;
         }
 
-        /* Header Styling */
+       
         .top-header {
             width: 100%;
         }
@@ -69,7 +69,7 @@
             text-decoration: underline;
         }
 
-        /* Main Container Layout */
+        
         .main-container {
             flex: 1;
             display: flex;
@@ -110,7 +110,7 @@
             margin-bottom: 25px;
         }
 
-        /* Top Action / Search Bar */
+        
         .search-box {
             display: flex;
             align-items: center;
@@ -132,7 +132,7 @@
             color: #718096;
         }
 
-        /* Table Styling */
+        
         .table-responsive {
             overflow-x: auto;
             margin-top: 15px;
@@ -179,7 +179,7 @@
             color: #854D0E;
         }
 
-        /* Action Buttons */
+        
         .btn-action {
             display: inline-flex;
             align-items: center;
@@ -207,7 +207,7 @@
             color: #DC2626;
         }
 
-        /* Footer Styling */
+
         .footer {
             background-color: #0E1318;
             color: #ffffff;
@@ -221,7 +221,8 @@
 </head>
 <body>
 
-    <!-- Header / Navbar -->
+    
+
     <header class="top-header">
         <div class="header-title-bar">
             <h2>Admin Dashboard - Room Rental System</h2>
@@ -237,7 +238,7 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
+    
     <main class="main-container">
         <div class="content-card">
             <div class="card-header">
@@ -251,7 +252,7 @@
             </div>
             <div class="underline"></div>
 
-            <!-- Tenants Table -->
+            
             <div class="table-responsive">
                 <table>
                     <thead>
@@ -266,7 +267,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Demo Static Data Rows -->
+                       
                         <tr>
                             <td>#201</td>
                             <td>Mahmudul Hasan</td>
@@ -309,7 +310,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
+   
     <footer class="footer">
         <p>&copy; 2026 Room Rental System. All rights reserved.</p>
     </footer>
