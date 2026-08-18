@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Room Rental System</title>
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome Icons -->
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     
     <style>
@@ -24,7 +24,7 @@
             flex-direction: column;
         }
 
-        /* Header Styling */
+       
         .top-header {
             width: 100%;
         }
@@ -67,7 +67,7 @@
             opacity: 0.85;
         }
 
-        /* Main Dashboard Layout */
+       
         .main-container {
             flex: 1;
             display: flex;
@@ -100,7 +100,7 @@
             margin-bottom: 35px;
         }
 
-        /* Cards Grid */
+        
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -154,7 +154,7 @@
             line-height: 1.4;
         }
 
-        /* Footer Styling */
+      
         .footer {
             background-color: #0E1318;
             color: #ffffff;
@@ -168,7 +168,7 @@
 </head>
 <body>
 
-    <!-- Header / Navbar -->
+    
     <header class="top-header">
         <div class="header-title-bar">
             <h2>Admin Dashboard - Room Rental System</h2>
@@ -183,16 +183,16 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
+    
     <main class="main-container">
         <div class="dashboard-card">
             <h1 class="welcome-text">Welcome Admin</h1>
             <div class="underline"></div>
 
-            <!-- Action Grid Cards -->
+            
             <div class="cards-grid">
                 
-                <!-- View Owners Card -->
+               
                 <a href="#" class="action-card">
                     <div class="icon-box">
                         <i class="fa-solid fa-users"></i>
@@ -201,7 +201,7 @@
                     <p>Manage property owners</p>
                 </a>
 
-                <!-- View Tenants Card -->
+              
                 <a href="#" class="action-card">
                     <div class="icon-box">
                         <i class="fa-regular fa-user"></i>
@@ -210,7 +210,7 @@
                     <p>Manage tenants</p>
                 </a>
 
-                <!-- View Listings Card -->
+                
                 <a href="#" class="action-card">
                     <div class="icon-box">
                         <i class="fa-solid fa-house-chimney"></i>
@@ -219,7 +219,7 @@
                     <p>Manage room listings</p>
                 </a>
 
-                <!-- Delete User/Listing Card -->
+               
                 <a href="#" class="action-card">
                     <div class="icon-box">
                         <i class="fa-regular fa-trash-can dark-icon"></i>
@@ -232,7 +232,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
+    
     <footer class="footer">
         <p>&copy; 2026 Room Rental System. All rights reserved.</p>
     </footer>
