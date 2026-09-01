@@ -15,23 +15,22 @@ $valid = true;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $name = trim($_POST["owner_name"] ?? "");
-    $username = trim($_POST["owner_username"] ?? "");
-    $dob = trim($_POST["owner_dob"] ?? "");
-    $phone = trim($_POST["owner_phone"] ?? "");
-    $email = trim($_POST["owner_email"] ?? "");
-    $address = trim($_POST["owner_address"] ?? "");
-    $nid = trim($_POST["owner_nid"] ?? "");
+    $name = trim($_POST["tenant_name"] ?? "");
+    $username = trim($_POST["tenant_username"] ?? "");
+    $dob = trim($_POST["tenant_dob"] ?? "");
+    $phone = trim($_POST["tenant_phone"] ?? "");
+    $email = trim($_POST["tenant_email"] ?? "");
+    $address = trim($_POST["tenant_address"] ?? "");
     $password = trim($_POST["password"] ?? "");
 
     if (empty($name))
     {
-        $message = "Owner Name Required";
+        $message = "Tenant Name Required";
         $valid = false;
     }
     else if (!preg_match("/^[A-Za-z ]+$/", $name))
     {
-        $message = "Invalid Owner Name";
+        $message = "Invalid Tenant Name";
         $valid = false;
     }
 
@@ -59,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
     else if (!preg_match("/^01[3-9][0-9]{8}$/", $phone))
     {
-        $message = "Invalid Phone Number (11 digits starting with 01)";
+        $message = "Invalid Phone Number";
         $valid = false;
     }
 
@@ -80,16 +79,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $valid = false;
     }
 
-    // Handle NID: text or file upload
-    if (isset($_FILES["owner_nid_file"]) && $_FILES["owner_nid_file"]["error"] == 0)
+    // Handle NID: file upload or text
+    if (isset($_FILES["tenant_nid"]) && $_FILES["tenant_nid"]["error"] == 0)
     {
-        $allowedTypes = ["image/jpeg", "image/jpg", "image/png", "application/pdf"];
-        if (!in_array($_FILES["owner_nid_file"]["type"], $allowedTypes))
+        $allowedTypes = [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "application/pdf"
+        ];
+
+        $fileType = $_FILES["tenant_nid"]["type"];
+        $fileSize = $_FILES["tenant_nid"]["size"];
+
+        if (!in_array($fileType, $allowedTypes))
         {
-            $message = "Only JPG, PNG, and PDF files are allowed for NID";
+            $message = "Only JPG, JPEG, PNG, and PDF files are allowed for NID";
             $valid = false;
         }
-        else if ($_FILES["owner_nid_file"]["size"] > 5 * 1024 * 1024)
+        else if ($fileSize > 5 * 1024 * 1024)
         {
             $message = "NID file size must be less than 5 MB";
             $valid = false;
@@ -97,22 +105,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         else
         {
             $uploaddirectory = "../Uploads/";
+
             if (!is_dir($uploaddirectory))
             {
                 mkdir($uploaddirectory, 0777, true);
             }
-            $filename = time() . "_" . basename($_FILES["owner_nid_file"]["name"]);
+
+            $filename = time() . "_" . basename($_FILES["tenant_nid"]["name"]);
             $nid = $uploaddirectory . $filename;
-            if (!move_uploaded_file($_FILES["owner_nid_file"]["tmp_name"], $nid))
+
+            if (!move_uploaded_file($_FILES["tenant_nid"]["tmp_name"], $nid))
             {
-                $message = "Failed to upload NID file";
+                $message = "Failed to upload NID file.";
                 $valid = false;
             }
         }
     }
-    else if (empty($nid))
+    else if (!empty($_POST["tenant_nid"]))
     {
-        $message = "NID Number or File Required";
+        $nid = trim($_POST["tenant_nid"]);
+    }
+    else
+    {
+        $message = "NID File or Number is Required";
         $valid = false;
     }
 
@@ -127,8 +142,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $database = new db();
         $connection = $database->connection();
 
-        $emailCheck = $database->CheckOwner($connection, "Owner", $email);
-        $userCheck = $database->CheckOwnerUsername($connection, "Owner", $username);
+        $emailCheck = $database->CheckTenant(
+            $connection,
+            "Tenant",
+            $email
+        );
+
+        $userCheck = $database->CheckTenantUsername(
+            $connection,
+            "Tenant",
+            $username
+        );
 
         if ($emailCheck && $emailCheck->num_rows > 0)
         {
@@ -140,24 +164,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         else
         {
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $hashed_password = password_hash(
+                $password,
+                PASSWORD_DEFAULT
+            );
 
-            $result = $database->signup(
+            $result = $database->signupTenant(
                 $connection,
-                "Owner",
+                "Tenant",
                 $name,
                 $username,
-                $address,
-                $nid,
-                $dob,
                 $email,
                 $phone,
-                $hashedPassword
+                $address,
+                $dob,
+                $hashed_password,
+                $nid
             );
 
             if ($result)
             {
-                header("Location: ../View/OwnerLogin.php");
+                header("Location: ../View/TenantLogin.php");
                 exit();
             }
             else

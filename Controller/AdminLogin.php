@@ -7,14 +7,14 @@ if (session_status() == PHP_SESSION_NONE)
     session_start();
 }
 
-$name = "";
+$username = "";
 $password = "";
 $message = "";
 $remember = false;
 
-if (isset($_COOKIE["remember_owner"]))
+if (isset($_COOKIE["remember_admin"]))
 {
-    $name = $_COOKIE["remember_owner"];
+    $username = $_COOKIE["remember_admin"];
     $remember = true;
 }
 
@@ -22,13 +22,13 @@ $valid = true;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $name = trim($_POST["username"] ?? $_POST["owner_email"] ?? "");
+    $username = trim($_POST["admin_username"] ?? $_POST["username"] ?? "");
     $password = trim($_POST["password"] ?? "");
     $remember = isset($_POST["rememberuser"]) && $_POST["rememberuser"] === "1";
 
-    if (empty($name))
+    if (empty($username))
     {
-        $message = "Email or Username Required";
+        $message = "Username is Required";
         $valid = false;
     }
 
@@ -43,32 +43,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $database = new db();
         $connection = $database->connection();
 
-        $result = $database->LoginOwner(
+        $result = $database->LoginAdmin(
             $connection,
-            "Owner",
-            $name
+            "Admin",
+            $username
         );
 
         if ($result && $result->num_rows > 0)
         {
             $row = $result->fetch_assoc();
-            $dbPassword = $row["owner_password"] ?? "";
+            $dbPassword = $row["password"] ?? "";
 
             if (password_verify($password, $dbPassword) || $password === $dbPassword)
             {
                 $_SESSION["logged_In"] = true;
-                $_SESSION["owner_id"] = $row["owner_id"];
-                $_SESSION["owner_name"] = $row["owner_name"];
-                $_SESSION["owner_username"] = $row["owner_username"];
-                $_SESSION["owner_email"] = $row["owner_email"] ?? "";
+                $_SESSION["admin_id"] = $row["admin_id"];
+                $_SESSION["admin_name"] = $row["admin_name"];
+                $_SESSION["admin_username"] = $row["username"];
 
                 $message = "Log In Successful!";
 
                 if ($remember)
                 {
                     setcookie(
-                        "remember_owner",
-                        $name,
+                        "remember_admin",
+                        $username,
                         time() + (86400 * 30),
                         "/"
                     );
@@ -76,14 +75,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 else
                 {
                     setcookie(
-                        "remember_owner",
+                        "remember_admin",
                         "",
                         time() - 3600,
                         "/"
                     );
                 }
 
-                header("Location: ../View/Owner.php");
+                header("Location: ../View/AdminDashboard.php");
                 exit();
             }
             else
@@ -93,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         else
         {
-            $message = "Account Not Found";
+            $message = "Admin Not Found";
         }
     }
 }

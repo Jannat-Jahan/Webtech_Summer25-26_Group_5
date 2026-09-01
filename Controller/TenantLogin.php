@@ -7,14 +7,14 @@ if (session_status() == PHP_SESSION_NONE)
     session_start();
 }
 
-$name = "";
+$email = "";
 $password = "";
 $message = "";
 $remember = false;
 
-if (isset($_COOKIE["remember_owner"]))
+if (isset($_COOKIE["remember_tenant"]))
 {
-    $name = $_COOKIE["remember_owner"];
+    $email = $_COOKIE["remember_tenant"];
     $remember = true;
 }
 
@@ -22,13 +22,13 @@ $valid = true;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $name = trim($_POST["username"] ?? $_POST["owner_email"] ?? "");
+    $email = trim($_POST["tenant_email"] ?? $_POST["email"] ?? "");
     $password = trim($_POST["password"] ?? "");
     $remember = isset($_POST["rememberuser"]) && $_POST["rememberuser"] === "1";
 
-    if (empty($name))
+    if (empty($email))
     {
-        $message = "Email or Username Required";
+        $message = "Email or Username is Required";
         $valid = false;
     }
 
@@ -43,32 +43,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $database = new db();
         $connection = $database->connection();
 
-        $result = $database->LoginOwner(
+        $result = $database->LoginTenant(
             $connection,
-            "Owner",
-            $name
+            "Tenant",
+            $email
         );
 
         if ($result && $result->num_rows > 0)
         {
             $row = $result->fetch_assoc();
-            $dbPassword = $row["owner_password"] ?? "";
+            $dbPassword = $row["tenant_password"] ?? "";
 
             if (password_verify($password, $dbPassword) || $password === $dbPassword)
             {
                 $_SESSION["logged_In"] = true;
-                $_SESSION["owner_id"] = $row["owner_id"];
-                $_SESSION["owner_name"] = $row["owner_name"];
-                $_SESSION["owner_username"] = $row["owner_username"];
-                $_SESSION["owner_email"] = $row["owner_email"] ?? "";
+                $_SESSION["tenant_id"] = $row["tenant_id"];
+                $_SESSION["tenant_name"] = $row["tenant_name"];
+                $_SESSION["tenant_username"] = $row["tenant_username"];
+                $_SESSION["tenant_email"] = $row["tenant_email"];
 
                 $message = "Log In Successful!";
 
                 if ($remember)
                 {
                     setcookie(
-                        "remember_owner",
-                        $name,
+                        "remember_tenant",
+                        $email,
                         time() + (86400 * 30),
                         "/"
                     );
@@ -76,14 +76,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 else
                 {
                     setcookie(
-                        "remember_owner",
+                        "remember_tenant",
                         "",
                         time() - 3600,
                         "/"
                     );
                 }
 
-                header("Location: ../View/Owner.php");
+                header("Location: ../View/tenant_dashboard.php");
                 exit();
             }
             else
