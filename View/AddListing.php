@@ -224,7 +224,6 @@
                 type="submit"
                 value="Add Listing">
 
-
             <input
                 type="reset"
                 value="Reset">
@@ -349,5 +348,4 @@
     </script>
 
 </body>
-
 </html>
