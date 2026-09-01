@@ -23,7 +23,7 @@ if (!isset($_SESSION["tenant_id"]))
 
     <title>Browse Listings</title>
 
-    <link rel="stylesheet" href="../Design/tenant_dashboard_style.css">
+    <link rel="stylesheet" href="../Design/tenant_dashboard_style.php">
 
     <script src="../JS/tenant.js"></script>
 

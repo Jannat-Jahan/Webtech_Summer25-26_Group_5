@@ -10,7 +10,7 @@ include "../Controller/LoginValidation.php";
 
     <title>Login Page</title>
 
-    <link rel="stylesheet" href="../Design/Style.css">
+    <link rel="stylesheet" href="../Design/style.php">
 
     <script>
 

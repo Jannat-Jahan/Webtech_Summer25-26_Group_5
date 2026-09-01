@@ -14,7 +14,7 @@ include "../Controller/UpdateTenant.php";
 
     <title>Tenant Profile</title>
 
-    <link rel="stylesheet" href="../Design/tenant_dashboard_style.css">
+    <link rel="stylesheet" href="../Design/tenant_dashboard_style.php">
 
     <script>
         function validateProfile()

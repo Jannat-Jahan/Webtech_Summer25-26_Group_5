@@ -10,7 +10,7 @@ include "../Controller/RegisterValidation.php";
 
     <title>User Registration</title>
 
-    <link rel="stylesheet" href="../Design/Style.css">
+    <link rel="stylesheet" href="../Design/style.php">
 
     <script>
 

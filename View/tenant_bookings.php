@@ -31,7 +31,7 @@ $result = $database->getTenantBookings($connection, "Books", "Listings", $tenant
 
     <title>My Bookings</title>
 
-    <link rel="stylesheet" href="../Design/tenant_dashboard_style.css">
+    <link rel="stylesheet" href="../Design/tenant_dashboard_style.php">
 
 </head>
 

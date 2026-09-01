@@ -11,7 +11,7 @@ include "../Controller/TenantLogin.php";
 
     <title>Tenant Login</title>
 
-    <link rel="stylesheet" href="../Design/tenant_dashboard_style.css">
+    <link rel="stylesheet" href="../Design/tenant_dashboard_style.php">
 
     <script>
 

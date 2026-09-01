@@ -1,0 +1,247 @@
+<?php
+header("Content-Type: text/css");
+?>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: #f4f1e8;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+/* Main Container */
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #fffdf8;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(60, 70, 50, 0.20);
+}
+
+/* Headings */
+
+h1 {
+    color: #315c4a;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 35px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+/* Header */
+
+.Header h1 {
+    background-color: #294638;
+    color: white;
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+/* Navigation Bar */
+
+.topnav {
+    background-color: #a9bea9;
+    padding: 10px;
+    margin-top: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #26382d;
+}
+
+.topnav a:hover {
+    background-color: #5f806c;
+    color: white;
+}
+
+.topnav + .container {
+    margin-top: 20px;
+}
+
+/* Forms */
+
+form {
+    display: block;
+}
+
+/* Fieldset */
+
+fieldset {
+    border: 2px solid #6f927e;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: #edf2e8;
+    margin-bottom: 20px;
+}
+
+legend {
+    padding: 10px;
+    background-color: #315c4a;
+    color: white;
+    border-radius: 20px;
+    font-size: 15px;
+}
+
+/* Tables */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tr {
+    margin-bottom: 10px;
+}
+
+td {
+    padding: 8px;
+}
+
+th {
+    padding: 10px;
+    background-color: #315c4a;
+    color: white;
+}
+
+/* Labels */
+
+label {
+    margin-bottom: 10px;
+}
+
+/* Make the first column of forms wider */
+
+td:first-child {
+    width: 30%;
+    font-weight: bold;
+    color: #294638;
+}
+
+/* Text Inputs */
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="email"],
+input[type="file"],
+input[type="password"],
+input[type="tel"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 0 10px;
+    border: 1px solid #9aac9b;
+    border-radius: 10px;
+    background-color: #fffdf8;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 14px;
+}
+
+/* Textarea */
+
+textarea {
+    resize: vertical;
+}
+
+/* Input Focus */
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="file"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border: 2px solid #5f806c;
+}
+
+/* Read-only Input */
+
+input[readonly] {
+    background-color: #e1e6df;
+    color: #526156;
+    cursor: not-allowed;
+}
+
+/* Radio Buttons */
+
+input[type="radio"] {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+/* Checkboxes */
+
+input[type="checkbox"] {
+    cursor: pointer;
+}
+
+/* Buttons */
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+    background-color: #3f6b54;
+    color: white;
+    padding: 10px;
+    border: 2px solid #294638;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-top: 10px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #294638;
+}
+
+input[type="reset"]:hover {
+    background-color: #7f9b86;
+}
+
+input[type="button"]:hover {
+    background-color: #294638;
+}
+
+/* Paragraphs */
+
+.container p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Footer */
+
+.footer h2 {
+    background-color: #294638;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 15px;
+}
