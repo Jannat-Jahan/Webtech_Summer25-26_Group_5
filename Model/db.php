@@ -2,6 +2,7 @@
 
 class db
 {
+<<<<<<< HEAD
     function connection()
     {
         $connection = mysqli_connect(
@@ -13,11 +14,32 @@ class db
 
         if (!$connection) {
             die("Database Connection Failed: " . mysqli_connect_error());
+=======
+
+    function connection()
+    {
+        $db_host="localhost";
+        $db_user="root";
+        $db_password="";
+        $db_name="admin";
+
+        $connection=new mysqli(
+            $db_host,
+            $db_user,
+            $db_password,
+            $db_name
+        );
+
+        if($connection->connect_error)
+        {
+            die("Please Connect the Database");
+>>>>>>> 0e011b6 (Admin Done By Tanzila)
         }
 
         return $connection;
     }
 
+<<<<<<< HEAD
     // ==========================================
     // OWNER MODULE DATABASE FUNCTIONS
     // ==========================================
@@ -133,10 +155,113 @@ class db
                 WHERE owner_id = '$owner_id'";
 
         $result = $connection->query($sql);
+=======
+
+    // =========================
+    // OWNER FUNCTIONS
+    // =========================
+
+    function addOwner(
+        $connection,
+        $tablename,
+        $owner_name,
+        $owner_nid,
+        $owner_address,
+        $owner_dob,
+        $owner_email,
+        $owner_phone,
+        $owner_password,
+        $owner_username
+    )
+    {
+        $sql="INSERT INTO ".$tablename."
+        (
+            owner_name,
+            owner_nid,
+            owner_address,
+            owner_dob,
+            owner_email,
+            owner_phone,
+            owner_password,
+            owner_username
+        )
+        VALUES
+        (
+            '".$owner_name."',
+            '".$owner_nid."',
+            '".$owner_address."',
+            '".$owner_dob."',
+            '".$owner_email."',
+            '".$owner_phone."',
+            '".$owner_password."',
+            '".$owner_username."'
+        )";
+
+        $result=$connection->query($sql);
+
         return $result;
     }
 
 
+    function viewOwners(
+        $connection,
+        $tablename
+    )
+    {
+        $sql="SELECT * FROM ".$tablename;
+
+        $result=$connection->query($sql);
+
+        return $result;
+    }
+
+
+    function getOwner(
+        $connection,
+        $tablename,
+        $owner_id
+    )
+    {
+        $sql="SELECT * FROM ".$tablename."
+        WHERE owner_id='".$owner_id."'";
+
+        $result=$connection->query($sql);
+
+        return $result;
+    }
+
+
+    function updateOwner(
+        $connection,
+        $tablename,
+        $owner_id,
+        $owner_name,
+        $owner_nid,
+        $owner_address,
+        $owner_dob,
+        $owner_email,
+        $owner_phone,
+        $owner_username
+    )
+    {
+        $sql="UPDATE ".$tablename." SET
+        owner_name='".$owner_name."',
+        owner_nid='".$owner_nid."',
+        owner_address='".$owner_address."',
+        owner_dob='".$owner_dob."',
+        owner_email='".$owner_email."',
+        owner_phone='".$owner_phone."',
+        owner_username='".$owner_username."'
+        WHERE owner_id='".$owner_id."'";
+
+        $result=$connection->query($sql);
+
+>>>>>>> 0e011b6 (Admin Done By Tanzila)
+        return $result;
+    }
+
+
+<<<<<<< HEAD
     // ==========================================
     // LISTINGS & UPLOADS MODULE DATABASE FUNCTIONS
     // ==========================================
@@ -156,6 +281,40 @@ class db
     {
         // 1. Insert property into Listings table
         $sql = "INSERT INTO $table
+=======
+    function deleteOwner(
+        $connection,
+        $tablename,
+        $owner_id
+    )
+    {
+        $sql="DELETE FROM ".$tablename."
+        WHERE owner_id='".$owner_id."'";
+
+        $result=$connection->query($sql);
+
+        return $result;
+    }
+
+
+    // =========================
+    // LISTING FUNCTIONS
+    // =========================
+
+    function addListing(
+        $connection,
+        $tablename,
+        $rent,
+        $status,
+        $listing_date,
+        $location,
+        $home_name,
+        $description,
+        $listing_image
+    )
+    {
+        $sql="INSERT INTO ".$tablename."
+>>>>>>> 0e011b6 (Admin Done By Tanzila)
         (
             rent,
             status,
@@ -167,6 +326,7 @@ class db
         )
         VALUES
         (
+<<<<<<< HEAD
             '$rent',
             '$status',
             '$listing_date',
@@ -186,10 +346,23 @@ class db
                           VALUES ('$owner_id', '$listing_id')";
             $connection->query($uploadSql);
         }
+=======
+            '".$rent."',
+            '".$status."',
+            '".$listing_date."',
+            '".$location."',
+            '".$home_name."',
+            '".$description."',
+            '".$listing_image."'
+        )";
+
+        $result=$connection->query($sql);
+>>>>>>> 0e011b6 (Admin Done By Tanzila)
 
         return $result;
     }
 
+<<<<<<< HEAD
     function getOwnerListings($connection, $table = "Listings", $owner_id = 0)
     {
         $sql = "SELECT l.*
@@ -314,10 +487,67 @@ class db
                 WHERE listing_id = '$listing_id'";
 
         $result = $connection->query($sql);
+=======
+
+    function viewListings(
+        $connection,
+        $tablename
+    )
+    {
+        $sql="SELECT * FROM ".$tablename;
+
+        $result=$connection->query($sql);
+
         return $result;
     }
 
 
+    function getListing(
+        $connection,
+        $tablename,
+        $listing_id
+    )
+    {
+        $sql="SELECT * FROM ".$tablename."
+        WHERE listing_id='".$listing_id."'";
+
+        $result=$connection->query($sql);
+
+        return $result;
+    }
+
+
+    function updateListing(
+        $connection,
+        $tablename,
+        $listing_id,
+        $rent,
+        $status,
+        $listing_date,
+        $location,
+        $home_name,
+        $description,
+        $listing_image
+    )
+    {
+        $sql="UPDATE ".$tablename." SET
+        rent='".$rent."',
+        status='".$status."',
+        listing_date='".$listing_date."',
+        location='".$location."',
+        home_name='".$home_name."',
+        description='".$description."',
+        listing_image='".$listing_image."'
+        WHERE listing_id='".$listing_id."'";
+
+        $result=$connection->query($sql);
+
+>>>>>>> 0e011b6 (Admin Done By Tanzila)
+        return $result;
+    }
+
+
+<<<<<<< HEAD
     // ==========================================
     // TENANT MODULE DATABASE FUNCTIONS
     // ==========================================
@@ -566,3 +796,22 @@ class db
 }
 
 ?>
+=======
+    function deleteListing(
+        $connection,
+        $tablename,
+        $listing_id
+    )
+    {
+        $sql="DELETE FROM ".$tablename."
+        WHERE listing_id='".$listing_id."'";
+
+        $result=$connection->query($sql);
+
+        return $result;
+    }
+
+}
+
+?>
+>>>>>>> 0e011b6 (Admin Done By Tanzila)
