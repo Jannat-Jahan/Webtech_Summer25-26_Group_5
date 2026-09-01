@@ -23,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $address = trim($_POST["tenant_address"] ?? "");
     $password = trim($_POST["password"] ?? "");
 
-
     if (empty($name))
     {
         $message = "Tenant Name Required";
@@ -34,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $message = "Invalid Tenant Name";
         $valid = false;
     }
-
 
     if (empty($username))
     {
@@ -47,13 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $valid = false;
     }
 
-
     if (empty($dob))
     {
         $message = "Date of Birth Required";
         $valid = false;
     }
-
 
     if (empty($phone))
     {
@@ -66,7 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $valid = false;
     }
 
-
     if (empty($email))
     {
         $message = "Email Required";
@@ -78,20 +73,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $valid = false;
     }
 
-
     if (empty($address))
     {
         $message = "Address Required";
         $valid = false;
     }
 
-
-    if (!isset($_FILES["tenant_nid"]) || $_FILES["tenant_nid"]["error"] != 0)
-    {
-        $message = "NID File is Required";
-        $valid = false;
-    }
-    else
+    // Handle NID: file upload or text
+    if (isset($_FILES["tenant_nid"]) && $_FILES["tenant_nid"]["error"] == 0)
     {
         $allowedTypes = [
             "image/jpeg",
@@ -113,15 +102,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             $message = "NID file size must be less than 5 MB";
             $valid = false;
         }
-    }
+        else
+        {
+            $uploaddirectory = "../Uploads/";
 
+            if (!is_dir($uploaddirectory))
+            {
+                mkdir($uploaddirectory, 0777, true);
+            }
+
+            $filename = time() . "_" . basename($_FILES["tenant_nid"]["name"]);
+            $nid = $uploaddirectory . $filename;
+
+            if (!move_uploaded_file($_FILES["tenant_nid"]["tmp_name"], $nid))
+            {
+                $message = "Failed to upload NID file.";
+                $valid = false;
+            }
+        }
+    }
+    else if (!empty($_POST["tenant_nid"]))
+    {
+        $nid = trim($_POST["tenant_nid"]);
+    }
+    else
+    {
+        $message = "NID File or Number is Required";
+        $valid = false;
+    }
 
     if (empty($password) || strlen($password) < 5)
     {
         $message = "Password must be at least 5 characters";
         $valid = false;
     }
-
 
     if ($valid)
     {
@@ -140,59 +154,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             $username
         );
 
-        if ($emailCheck->num_rows > 0)
+        if ($emailCheck && $emailCheck->num_rows > 0)
         {
             $message = "Email Already Taken";
         }
-        else if ($userCheck->num_rows > 0)
+        else if ($userCheck && $userCheck->num_rows > 0)
         {
             $message = "Username Already Taken";
         }
         else
         {
-            $uploaddirectory = "../Uploads/";
+            $hashed_password = password_hash(
+                $password,
+                PASSWORD_DEFAULT
+            );
 
-            if (!is_dir($uploaddirectory))
+            $result = $database->signupTenant(
+                $connection,
+                "Tenant",
+                $name,
+                $username,
+                $email,
+                $phone,
+                $address,
+                $dob,
+                $hashed_password,
+                $nid
+            );
+
+            if ($result)
             {
-                mkdir($uploaddirectory, 0777, true);
-            }
-
-            $filename = time() . "_" . basename($_FILES["tenant_nid"]["name"]);
-            $nid = $uploaddirectory . $filename;
-
-            if (move_uploaded_file($_FILES["tenant_nid"]["tmp_name"], $nid))
-            {
-                $hashed_password = password_hash(
-                    $password,
-                    PASSWORD_DEFAULT
-                );
-
-                $result = $database->signupTenant(
-                    $connection,
-                    "Tenant",
-                    $name,
-                    $username,
-                    $dob,
-                    $phone,
-                    $email,
-                    $address,
-                    $nid,
-                    $hashed_password
-                );
-
-                if ($result)
-                {
-                    header("Location: ../View/TenantLogin.php");
-                    exit();
-                }
-                else
-                {
-                    $message = "Registration failed. Please try again.";
-                }
+                header("Location: ../View/TenantLogin.php");
+                exit();
             }
             else
             {
-                $message = "Failed to upload NID file.";
+                $message = "Registration failed. Please try again.";
             }
         }
     }

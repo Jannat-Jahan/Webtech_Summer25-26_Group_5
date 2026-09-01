@@ -47,7 +47,7 @@ else
 
     while ($row = $result->fetch_assoc())
     {
-        $imagePath = $row["listing_image"] ?? $row["property_image"] ?? "";
+        $imagePath = $row["listing_image"] ?? "";
         if (!empty($imagePath))
         {
             if (strpos($imagePath, "../Uploads/") === false && strpos($imagePath, "Uploads/") !== false)

@@ -7,14 +7,14 @@ if (session_status() == PHP_SESSION_NONE)
     session_start();
 }
 
-$email = "";
+$username = "";
 $password = "";
 $message = "";
 $remember = false;
 
-if (isset($_COOKIE["remember_tenant"]))
+if (isset($_COOKIE["remember_admin"]))
 {
-    $email = $_COOKIE["remember_tenant"];
+    $username = $_COOKIE["remember_admin"];
     $remember = true;
 }
 
@@ -22,13 +22,13 @@ $valid = true;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $email = trim($_POST["tenant_email"] ?? $_POST["email"] ?? "");
+    $username = trim($_POST["admin_username"] ?? $_POST["username"] ?? "");
     $password = trim($_POST["password"] ?? "");
     $remember = isset($_POST["rememberuser"]) && $_POST["rememberuser"] === "1";
 
-    if (empty($email))
+    if (empty($username))
     {
-        $message = "Email or Username is Required";
+        $message = "Username is Required";
         $valid = false;
     }
 
@@ -43,32 +43,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $database = new db();
         $connection = $database->connection();
 
-        $result = $database->LoginTenant(
+        $result = $database->LoginAdmin(
             $connection,
-            "Tenant",
-            $email
+            "Admin",
+            $username
         );
 
         if ($result && $result->num_rows > 0)
         {
             $row = $result->fetch_assoc();
-            $dbPassword = $row["tenant_password"] ?? "";
+            $dbPassword = $row["password"] ?? "";
 
             if (password_verify($password, $dbPassword) || $password === $dbPassword)
             {
                 $_SESSION["logged_In"] = true;
-                $_SESSION["tenant_id"] = $row["tenant_id"];
-                $_SESSION["tenant_name"] = $row["tenant_name"];
-                $_SESSION["tenant_username"] = $row["tenant_username"];
-                $_SESSION["tenant_email"] = $row["tenant_email"];
+                $_SESSION["admin_id"] = $row["admin_id"];
+                $_SESSION["admin_name"] = $row["admin_name"];
+                $_SESSION["admin_username"] = $row["username"];
 
                 $message = "Log In Successful!";
 
                 if ($remember)
                 {
                     setcookie(
-                        "remember_tenant",
-                        $email,
+                        "remember_admin",
+                        $username,
                         time() + (86400 * 30),
                         "/"
                     );
@@ -76,14 +75,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 else
                 {
                     setcookie(
-                        "remember_tenant",
+                        "remember_admin",
                         "",
                         time() - 3600,
                         "/"
                     );
                 }
 
-                header("Location: ../View/tenant_dashboard.php");
+                header("Location: ../View/AdminDashboard.php");
                 exit();
             }
             else
@@ -93,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         else
         {
-            $message = "Account Not Found";
+            $message = "Admin Not Found";
         }
     }
 }

@@ -56,7 +56,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $message = "Valid 11-digit Payment Number is required (e.g. 017XXXXXXXX).";
         $valid = false;
     }
-    // Student Card is optional (only required if tenant is a student)
+
+    // Student Card is optional / file upload
     if (isset($_FILES["student_card"]) && $_FILES["student_card"]["error"] == 0)
     {
         $allowedTypes = [
@@ -98,6 +99,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             }
         }
     }
+    else if (!empty($_POST["student_card"]))
+    {
+        $studentCard = trim($_POST["student_card"]);
+    }
+    else
+    {
+        $studentCard = "None";
+    }
 
     if ($valid)
     {
@@ -111,8 +120,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             $listingId,
             $bookingDate,
             $moveInDate,
-            $paymentNumber,
             $transactionId,
+            $paymentNumber,
             $studentCard
         );
 

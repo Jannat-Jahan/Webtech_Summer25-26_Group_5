@@ -2,160 +2,157 @@
 
 include "../Model/db.php";
 
-session_start();
+if (session_status() == PHP_SESSION_NONE)
+{
+    session_start();
+}
 
-if(!isset($_SESSION["owner_id"]))
+if (!isset($_SESSION["owner_id"]))
+{
+    echo "
+    <tr>
+        <td>
+            Please Login First
+        </td>
+    </tr>
+    ";
+}
+else
+{
+    $database = new db();
+    $connection = $database->connection();
+
+    $result = $database->getOwnerListings(
+        $connection,
+        "Listings",
+        $_SESSION["owner_id"]
+    );
+
+    if (!$result || $result->num_rows == 0)
     {
         echo "
         <tr>
-            <td>
-                Please Login First
+            <td colspan='2'>
+                No Listings Available
             </td>
         </tr>
         ";
     }
     else
     {
-        $database=new db();
-
-        $connection=$database->connection();
-
-        $result=$database->getOwnerListings(
-            $connection,
-            "listing",
-            $_SESSION["owner_id"]
-        );
-
-
-        if($result->num_rows==0)
+        while ($row = $result->fetch_assoc())
+        {
+            $imgPath = $row["listing_image"] ?? "";
+            $imgTag = "";
+            if (!empty($imgPath))
             {
-                echo "
-                <tr>
-                    <td>
-                        No Listings Available
-                    </td>
-                </tr>
-                ";
+                if (strpos($imgPath, "../Uploads/") === false && strpos($imgPath, "Uploads/") !== false)
+                {
+                    $imgPath = "../" . $imgPath;
+                }
+                else if (strpos($imgPath, "Uploads/") === false)
+                {
+                    $imgPath = "../Uploads/" . $imgPath;
+                }
+                $imgTag = "<div style='margin-bottom:10px;'><img src='" . htmlspecialchars($imgPath) . "' alt='Property' style='width:120px; height:80px; object-fit:cover; border-radius:8px;'></div>";
             }
-        else
-            {
-                while($row=$result->fetch_assoc())
-                    {
-                        echo "
-                        <tr>
 
-                            <td>
-                                <label>
-                                    Property :
-                                </label>
-                            </td>
+            echo "
+            <tr>
+                <td colspan='2'>
+                    " . $imgTag . "
+                </td>
+            </tr>
 
-                            <td>
-                                <input
-                                    type='text'
-                                    value='".$row["home_name"]."'
-                                    readonly>
-                            </td>
+            <tr>
+                <td>
+                    <label>
+                        Property :
+                    </label>
+                </td>
+                <td>
+                    <input
+                        type='text'
+                        value='" . htmlspecialchars($row["home_name"]) . "'
+                        readonly>
+                </td>
+            </tr>
 
-                        </tr>
+            <tr>
+                <td>
+                    <label>
+                        Location :
+                    </label>
+                </td>
+                <td>
+                    <input
+                        type='text'
+                        value='" . htmlspecialchars($row["location"]) . "'
+                        readonly>
+                </td>
+            </tr>
 
+            <tr>
+                <td>
+                    <label>
+                        Rent :
+                    </label>
+                </td>
+                <td>
+                    <input
+                        type='text'
+                        value='" . htmlspecialchars($row["rent"]) . " BDT'
+                        readonly>
+                </td>
+            </tr>
 
-                        <tr>
+            <tr>
+                <td>
+                    <label>
+                        Description :
+                    </label>
+                </td>
+                <td>
+                    <input
+                        type='text'
+                        value='" . htmlspecialchars($row["description"]) . "'
+                        readonly>
+                </td>
+            </tr>
 
-                            <td>
-                                <label>
-                                    Location :
-                                </label>
-                            </td>
+            <tr>
+                <td>
+                    <label>
+                        Status :
+                    </label>
+                </td>
+                <td>
+                    <input
+                        type='text'
+                        value='" . htmlspecialchars($row["status"]) . "'
+                        readonly>
+                </td>
+            </tr>
 
-                            <td>
-                                <input
-                                    type='text'
-                                    value='".$row["location"]."'
-                                    readonly>
-                            </td>
+            <tr>
+                <td colspan='2'>
+                    <a href='EditListing.php?id=" . urlencode($row["listing_id"]) . "'>
+                        <button type='button'>
+                            Edit
+                        </button>
+                    </a>
 
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                <label>
-                                    Rent :
-                                </label>
-                            </td>
-
-                            <td>
-                                <input
-                                    type='text'
-                                    value='".$row["rent"]." BDT'
-                                    readonly>
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                <label>
-                                    Description :
-                                </label>
-                            </td>
-
-                            <td>
-                                <input
-                                    type='text'
-                                    value='".$row["description"]."'
-                                    readonly>
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td>
-                                <label>
-                                    Status :
-                                </label>
-                            </td>
-
-                            <td>
-                                <input
-                                    type='text'
-                                    value='".$row["status"]."'
-                                    readonly>
-                            </td>
-
-                        </tr>
-
-
-                        <tr>
-
-                            <td colspan='2'>
-
-                                <a href='EditListing.php?id=".$row["listing_id"]."'>
-                                    <button type='button'>
-                                        Edit
-                                    </button>
-                                </a>
-
-                                <button
-                                    type='button'
-                                    onclick='DeleteListing(".$row["listing_id"].")'>
-
-                                    Delete
-
-                                </button>
-
-                            </td>
-
-                        </tr>
-                        ";
-                    }
-            }
+                    <button
+                        type='button'
+                        onclick='DeleteListing(" . urlencode($row["listing_id"]) . ")'>
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            <tr><td colspan='2'><hr style='border: 1px solid #1D5B4F; margin: 15px 0;'></td></tr>
+            ";
+        }
     }
+}
 
 ?>

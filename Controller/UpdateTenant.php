@@ -137,10 +137,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             $tenant_id,
             $name,
             $username,
-            $dob,
-            $phone,
             $email,
+            $phone,
             $address,
+            $dob,
             $nid
         );
 
