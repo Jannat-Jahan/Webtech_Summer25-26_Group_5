@@ -57,6 +57,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $message = "Username must be at least 5 characters";
         $valid = false;
     }
+    else if (!preg_match("/^[A-Za-z0-9_]+$/", $username))
+    {
+        $message = "Username can only contain letters, numbers, and underscores";
+        $valid = false;
+    }
+    else
+    {
+        // Server-side uniqueness check (defense in depth, in case the AJAX check was bypassed)
+        $safeUsername = $connection->real_escape_string($username);
+        $usernameResult = $database->CheckTenantUsername($connection, "Tenant", $safeUsername, $tenant_id);
+
+        if ($usernameResult && $usernameResult->num_rows > 0)
+        {
+            $message = "This username is already taken. Please choose another one.";
+            $valid = false;
+        }
+    }
 
     if (empty($dob))
     {
@@ -74,6 +91,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $message = "Invalid Email";
         $valid = false;
+    }
+    else
+    {
+        // Server-side uniqueness check (defense in depth, in case the AJAX check was bypassed)
+        $safeEmail = $connection->real_escape_string($email);
+        $emailResult = $database->CheckTenant($connection, "Tenant", $safeEmail, $tenant_id);
+
+        if ($emailResult && $emailResult->num_rows > 0)
+        {
+            $message = "This email is already registered to another account.";
+            $valid = false;
+        }
     }
 
     if (empty($address))
@@ -128,33 +157,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             }
         }
     }
-
-    if ($valid)
+if ($valid)
     {
-        $result = $database->updateTenant(
-            $connection,
-            "Tenant",
-            $tenant_id,
-            $name,
-            $username,
-            $email,
-            $phone,
-            $address,
-            $dob,
-            $nid
-        );
-
-        if ($result)
+        try
         {
-            $_SESSION["tenant_name"] = $name;
-            $_SESSION["tenant_username"] = $username;
-            $_SESSION["tenant_email"] = $email;
+            $result = $database->updateTenant(
+                $connection,
+                "Tenant",
+                $tenant_id,
+                $name,
+                $username,
+                $email,
+                $phone,
+                $address,
+                $dob,
+                $nid
+            );
 
-            $message = "Profile updated successfully!";
+            if ($result)
+            {
+                $_SESSION["tenant_name"] = $name;
+                $_SESSION["tenant_username"] = $username;
+                $_SESSION["tenant_email"] = $email;
+
+                $message = "Profile updated successfully!";
+            }
+            else
+            {
+                $message = "Failed to update profile.";
+            }
         }
-        else
+        catch (mysqli_sql_exception $e)
         {
-            $message = "Failed to update profile.";
+            if (str_contains($e->getMessage(), "tenant_email"))
+            {
+                $message = "This email is already registered to another account.";
+            }
+            else if (str_contains($e->getMessage(), "tenant_username"))
+            {
+                $message = "This username is already taken. Please choose another one.";
+            }
+            else
+            {
+                $message = "Failed to update profile. Please try again.";
+            }
         }
     }
 }

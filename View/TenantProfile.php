@@ -17,6 +17,56 @@ include "../Controller/UpdateTenant.php";
     <link rel="stylesheet" href="../Design/tenant_dashboard_style.php">
 
     <script>
+        function CheckTenantUsername()
+        {
+            let username = document.getElementById("tenant_username").value.trim();
+            let response = document.getElementById("username_check_response");
+            if (!response) return;
+
+            if (username.length < 5)
+            {
+                response.innerHTML = "";
+                return;
+            }
+
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    response.innerHTML = this.responseText;
+                }
+            };
+
+            xhttp.open("POST", "../Controller/CheckTenantUsername.php", true);
+            xhttp.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+            xhttp.send("tenant_username=" + encodeURIComponent(username));
+        }
+
+        function CheckTenantEmail()
+        {
+            let email = document.getElementById("tenant_email").value.trim();
+            let response = document.getElementById("email_check_response");
+            if (!response) return;
+
+            if (email === "")
+            {
+                response.innerHTML = "";
+                return;
+            }
+
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200)
+                {
+                    response.innerHTML = this.responseText;
+                }
+            };
+
+            xhttp.open("POST", "../Controller/CheckTenantEmail.php", true);
+            xhttp.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+            xhttp.send("tenant_email=" + encodeURIComponent(email));
+        }
+
         function validateProfile()
         {
             let name = document.getElementById("tenant_name").value.trim();
@@ -59,6 +109,20 @@ include "../Controller/UpdateTenant.php";
             if (dob === "")
             {
                 alert("Date of Birth is Required");
+                return false;
+            }
+
+            let usernameCheck = document.getElementById("username_check_response");
+            if (usernameCheck && usernameCheck.textContent.indexOf("already taken") !== -1)
+            {
+                alert("That username is already taken. Please choose another one.");
+                return false;
+            }
+
+            let emailCheck = document.getElementById("email_check_response");
+            if (emailCheck && emailCheck.textContent.indexOf("already registered") !== -1)
+            {
+                alert("That email is already registered. Please use another one.");
                 return false;
             }
 
@@ -158,7 +222,11 @@ include "../Controller/UpdateTenant.php";
                                 name="tenant_username"
                                 value="<?php echo htmlspecialchars($username); ?>"
                                 placeholder="Enter your username"
+                                onblur="CheckTenantUsername()"
+                                oninput="document.getElementById('username_check_response').innerHTML=''"
                             >
+                            <br>
+                            <small id="username_check_response"></small>
                         </td>
 
                     </tr>
@@ -176,7 +244,11 @@ include "../Controller/UpdateTenant.php";
                                 name="tenant_email"
                                 value="<?php echo htmlspecialchars($email); ?>"
                                 placeholder="Enter your email"
+                                onblur="CheckTenantEmail()"
+                                oninput="document.getElementById('email_check_response').innerHTML=''"
                             >
+                            <br>
+                            <small id="email_check_response"></small>
                         </td>
 
                     </tr>
