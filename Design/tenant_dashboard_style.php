@@ -1,7 +1,10 @@
+<<<<<<<< HEAD:Design/tenant_dashboard_style.php
 <?php
 header("Content-Type: text/css");
 ?>
 
+========
+>>>>>>>> 15cae9cdb90686654b2e0c1c83c313b119228c58:Design/tenant_dashboard_style.css
 * {
     margin: 0;
     padding: 0;

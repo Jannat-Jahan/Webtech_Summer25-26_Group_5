@@ -18,8 +18,9 @@ class db
         return $connection;
     }
 
+
     // ==========================================
-    // OWNER MODULE DATABASE FUNCTIONS
+    // OWNER MODULE
     // ==========================================
 
     function CheckOwner($connection, $table = "Owner", $owner_email = "")
@@ -27,18 +28,18 @@ class db
         $sql = "SELECT * FROM $table
                 WHERE owner_email = '$owner_email'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function CheckOwnerUsername($connection, $table = "Owner", $owner_username = "")
     {
         $sql = "SELECT * FROM $table
                 WHERE owner_username = '$owner_username'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function signup(
         $connection,
@@ -76,18 +77,18 @@ class db
             '$password'
         )";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function signin($connection, $table = "Owner", $owner_email = "")
     {
         $sql = "SELECT * FROM $table
                 WHERE owner_email = '$owner_email'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function LoginOwner($connection, $table = "Owner", $email_or_username = "")
     {
@@ -95,18 +96,18 @@ class db
                 WHERE owner_email = '$email_or_username'
                 OR owner_username = '$email_or_username'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function getOwner($connection, $table = "Owner", $owner_id = 0)
     {
         $sql = "SELECT * FROM $table
                 WHERE owner_id = '$owner_id'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function updateOwner(
         $connection,
@@ -132,13 +133,33 @@ class db
                 owner_phone = '$owner_phone'
                 WHERE owner_id = '$owner_id'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
+    }
+
+
+    function deleteOwner(
+        $connection,
+        $table = "Owner",
+        $owner_id = 0
+    )
+    {
+        $sql = "DELETE FROM $table
+                WHERE owner_id = '$owner_id'";
+
+        return $connection->query($sql);
+    }
+
+
+    function viewOwners($connection, $table = "Owner")
+    {
+        $sql = "SELECT * FROM $table";
+
+        return $connection->query($sql);
     }
 
 
     // ==========================================
-    // LISTINGS & UPLOADS MODULE DATABASE FUNCTIONS
+    // LISTINGS MODULE
     // ==========================================
 
     function addListing(
@@ -154,7 +175,6 @@ class db
         $listing_image = ""
     )
     {
-        // 1. Insert property into Listings table
         $sql = "INSERT INTO $table
         (
             rent,
@@ -181,51 +201,86 @@ class db
         if ($result) {
             $listing_id = $connection->insert_id;
 
-            // 2. Insert relationship into Uploads table
-            $uploadSql = "INSERT INTO Uploads (owner_id, listing_id)
-                          VALUES ('$owner_id', '$listing_id')";
+            $uploadSql = "INSERT INTO Uploads
+                          (owner_id, listing_id)
+                          VALUES
+                          ('$owner_id', '$listing_id')";
+
             $connection->query($uploadSql);
         }
 
         return $result;
     }
 
-    function getOwnerListings($connection, $table = "Listings", $owner_id = 0)
+
+    function viewListings($connection, $table = "Listings")
+    {
+        $sql = "SELECT * FROM $table";
+
+        return $connection->query($sql);
+    }
+
+
+    function getOwnerListings(
+        $connection,
+        $table = "Listings",
+        $owner_id = 0
+    )
     {
         $sql = "SELECT l.*
                 FROM $table l
-                JOIN Uploads u ON l.listing_id = u.listing_id
+                JOIN Uploads u
+                ON l.listing_id = u.listing_id
                 WHERE u.owner_id = '$owner_id'
                 ORDER BY l.listing_id DESC";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
-    function getRecentListings($connection, $table = "Listings", $owner_id = 0)
+
+    function getRecentListings(
+        $connection,
+        $table = "Listings",
+        $owner_id = 0
+    )
     {
         $sql = "SELECT l.*
                 FROM $table l
-                JOIN Uploads u ON l.listing_id = u.listing_id
+                JOIN Uploads u
+                ON l.listing_id = u.listing_id
                 WHERE u.owner_id = '$owner_id'
                 ORDER BY l.listing_id DESC
                 LIMIT 3";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
-    function getListing($connection, $table = "Listings", $listing_id = 0, $owner_id = 0)
+
+    function getListing(
+        $connection,
+        $table = "Listings",
+        $listing_id = 0,
+        $owner_id = 0
+    )
     {
-        $sql = "SELECT l.*
-                FROM $table l
-                JOIN Uploads u ON l.listing_id = u.listing_id
-                WHERE l.listing_id = '$listing_id'
-                AND u.owner_id = '$owner_id'";
+        if ($owner_id != 0) {
 
-        $result = $connection->query($sql);
-        return $result;
+            $sql = "SELECT l.*
+                    FROM $table l
+                    JOIN Uploads u
+                    ON l.listing_id = u.listing_id
+                    WHERE l.listing_id = '$listing_id'
+                    AND u.owner_id = '$owner_id'";
+
+        } else {
+
+            $sql = "SELECT * FROM $table
+                    WHERE listing_id = '$listing_id'";
+        }
+
+        return $connection->query($sql);
     }
+
 
     function updateListing(
         $connection,
@@ -239,56 +294,85 @@ class db
         $status = "Available"
     )
     {
-        // Verify owner via Uploads table first
-        $checkSql = "SELECT * FROM Uploads WHERE listing_id = '$listing_id' AND owner_id = '$owner_id'";
-        $checkResult = $connection->query($checkSql);
+        if ($owner_id != 0) {
 
-        if ($checkResult && $checkResult->num_rows > 0) {
-            $sql = "UPDATE $table
-                    SET
-                    home_name = '$home_name',
-                    location = '$location',
-                    rent = '$rent',
-                    description = '$description',
-                    status = '$status'
-                    WHERE listing_id = '$listing_id'";
+            $checkSql = "SELECT * FROM Uploads
+                         WHERE listing_id = '$listing_id'
+                         AND owner_id = '$owner_id'";
 
-            $result = $connection->query($sql);
-            return $result;
+            $checkResult = $connection->query($checkSql);
+
+            if (!$checkResult || $checkResult->num_rows == 0) {
+                return false;
+            }
         }
 
-        return false;
+        $sql = "UPDATE $table
+                SET
+                home_name = '$home_name',
+                location = '$location',
+                rent = '$rent',
+                description = '$description',
+                status = '$status'
+                WHERE listing_id = '$listing_id'";
+
+        return $connection->query($sql);
     }
 
-    function deleteListing($connection, $table = "Listings", $listing_id = 0, $owner_id = 0)
-    {
-        // Delete relationship from Uploads first
-        $sqlUploads = "DELETE FROM Uploads
-                       WHERE listing_id = '$listing_id'
-                       AND owner_id = '$owner_id'";
-        $connection->query($sqlUploads);
 
-        // Delete listing record from Listings
+    function deleteListing(
+        $connection,
+        $table = "Listings",
+        $listing_id = 0,
+        $owner_id = 0
+    )
+    {
+        if ($owner_id != 0) {
+
+            $sqlUploads = "DELETE FROM Uploads
+                           WHERE listing_id = '$listing_id'
+                           AND owner_id = '$owner_id'";
+
+            $connection->query($sqlUploads);
+
+        } else {
+
+            $sqlUploads = "DELETE FROM Uploads
+                           WHERE listing_id = '$listing_id'";
+
+            $connection->query($sqlUploads);
+        }
+
         $sql = "DELETE FROM $table
                 WHERE listing_id = '$listing_id'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
-    function getAvailableListings($connection, $table = "Listings")
+
+    function getAvailableListings(
+        $connection,
+        $table = "Listings"
+    )
     {
         $sql = "SELECT * FROM $table
                 WHERE status = 'Available'
                 ORDER BY listing_id DESC";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
-    function searchListings($connection, $table = "Listings", $location = "", $minRent = 0, $maxRent = 0)
+
+    function searchListings(
+        $connection,
+        $table = "Listings",
+        $location = "",
+        $minRent = 0,
+        $maxRent = 0
+    )
     {
-        $sql = "SELECT * FROM $table WHERE status = 'Available'";
+        $sql = "SELECT * FROM $table
+                WHERE status = 'Available'";
 
         if (!empty($location)) {
             $sql .= " AND location LIKE '%$location%'";
@@ -304,41 +388,52 @@ class db
 
         $sql .= " ORDER BY listing_id DESC";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
-    function getListingById($connection, $table = "Listings", $listing_id = 0)
+
+    function getListingById(
+        $connection,
+        $table = "Listings",
+        $listing_id = 0
+    )
     {
         $sql = "SELECT * FROM $table
                 WHERE listing_id = '$listing_id'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
 
     // ==========================================
-    // TENANT MODULE DATABASE FUNCTIONS
+    // TENANT MODULE
     // ==========================================
 
-    function CheckTenant($connection, $table = "Tenant", $tenant_email = "")
+    function CheckTenant(
+        $connection,
+        $table = "Tenant",
+        $tenant_email = ""
+    )
     {
         $sql = "SELECT * FROM $table
                 WHERE tenant_email = '$tenant_email'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
-    function CheckTenantUsername($connection, $table = "Tenant", $tenant_username = "")
+
+    function CheckTenantUsername(
+        $connection,
+        $table = "Tenant",
+        $tenant_username = ""
+    )
     {
         $sql = "SELECT * FROM $table
                 WHERE tenant_username = '$tenant_username'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function signupTenant(
         $connection,
@@ -376,28 +471,36 @@ class db
             '$tenant_nid'
         )";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
-    function LoginTenant($connection, $table = "Tenant", $email_or_username = "")
+
+    function LoginTenant(
+        $connection,
+        $table = "Tenant",
+        $email_or_username = ""
+    )
     {
         $sql = "SELECT * FROM $table
                 WHERE tenant_email = '$email_or_username'
                 OR tenant_username = '$email_or_username'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
-    function getTenant($connection, $table = "Tenant", $tenant_id = 0)
+
+    function getTenant(
+        $connection,
+        $table = "Tenant",
+        $tenant_id = 0
+    )
     {
         $sql = "SELECT * FROM $table
                 WHERE tenant_id = '$tenant_id'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function updateTenant(
         $connection,
@@ -423,13 +526,21 @@ class db
                 tenant_nid = '$tenant_nid'
                 WHERE tenant_id = '$tenant_id'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
+    }
+
+
+    function getAllTenants($connection)
+    {
+        $sql = "SELECT * FROM Tenant
+                ORDER BY tenant_id DESC";
+
+        return $connection->query($sql);
     }
 
 
     // ==========================================
-    // BOOKS (BOOKINGS) MODULE DATABASE FUNCTIONS
+    // BOOKING MODULE
     // ==========================================
 
     function addBooking(
@@ -465,35 +576,69 @@ class db
             '$student_card'
         )";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
-    function getTenantBookings($connection, $booking_table = "Books", $listing_table = "Listings", $tenant_id = 0)
+
+    function getTenantBookings(
+        $connection,
+        $booking_table = "Books",
+        $listing_table = "Listings",
+        $tenant_id = 0
+    )
     {
-        $sql = "SELECT b.*, l.home_name, l.location, l.rent, l.listing_image, l.status AS listing_status
+        $sql = "SELECT b.*,
+                       l.home_name,
+                       l.location,
+                       l.rent,
+                       l.listing_image,
+                       l.status AS listing_status
                 FROM $booking_table b
-                LEFT JOIN $listing_table l ON b.listing_id = l.listing_id
+                LEFT JOIN $listing_table l
+                ON b.listing_id = l.listing_id
                 WHERE b.tenant_id = '$tenant_id'
                 ORDER BY b.booking_id DESC";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
+    }
+
+
+    function getAllBookings($connection)
+    {
+        $sql = "SELECT b.*,
+                       t.tenant_name,
+                       t.tenant_email,
+                       t.tenant_phone,
+                       l.home_name,
+                       l.location,
+                       l.rent
+                FROM Books b
+                LEFT JOIN Tenant t
+                ON b.tenant_id = t.tenant_id
+                LEFT JOIN Listings l
+                ON b.listing_id = l.listing_id
+                ORDER BY b.booking_id DESC";
+
+        return $connection->query($sql);
     }
 
 
     // ==========================================
-    // ADMIN MODULE DATABASE FUNCTIONS
+    // ADMIN MODULE
     // ==========================================
 
-    function CheckAdmin($connection, $table = "Admin", $username = "")
+    function CheckAdmin(
+        $connection,
+        $table = "Admin",
+        $username = ""
+    )
     {
         $sql = "SELECT * FROM $table
                 WHERE username = '$username'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function signupAdmin(
         $connection,
@@ -516,50 +661,44 @@ class db
             '$password'
         )";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
 
-    function LoginAdmin($connection, $table = "Admin", $username = "")
+
+    function LoginAdmin(
+        $connection,
+        $table = "Admin",
+        $username = ""
+    )
     {
         $sql = "SELECT * FROM $table
                 WHERE username = '$username'";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function getAllListings($connection)
     {
-        $sql = "SELECT l.*, o.owner_name, o.owner_email, o.owner_phone
+        $sql = "SELECT l.*,
+                       o.owner_name,
+                       o.owner_email,
+                       o.owner_phone
                 FROM Listings l
-                LEFT JOIN Uploads u ON l.listing_id = u.listing_id
-                LEFT JOIN Owner o ON u.owner_id = o.owner_id
+                LEFT JOIN Uploads u
+                ON l.listing_id = u.listing_id
+                LEFT JOIN Owner o
+                ON u.owner_id = o.owner_id
                 ORDER BY l.listing_id DESC";
 
-        $result = $connection->query($sql);
-        return $result;
+        return $connection->query($sql);
     }
+
 
     function getAllOwners($connection)
     {
-        $sql = "SELECT * FROM Owner ORDER BY owner_id DESC";
-        return $connection->query($sql);
-    }
-
-    function getAllTenants($connection)
-    {
-        $sql = "SELECT * FROM Tenant ORDER BY tenant_id DESC";
-        return $connection->query($sql);
-    }
-
-    function getAllBookings($connection)
-    {
-        $sql = "SELECT b.*, t.tenant_name, t.tenant_email, t.tenant_phone, l.home_name, l.location, l.rent
-                FROM Books b
-                LEFT JOIN Tenant t ON b.tenant_id = t.tenant_id
-                LEFT JOIN Listings l ON b.listing_id = l.listing_id
-                ORDER BY b.booking_id DESC";
+        $sql = "SELECT * FROM Owner
+                ORDER BY owner_id DESC";
 
         return $connection->query($sql);
     }
