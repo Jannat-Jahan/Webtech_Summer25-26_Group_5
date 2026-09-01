@@ -1,40 +1,88 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body{
+body {
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    background-color:#f4f1e8;
+    background-color: #f4f1e8;
     padding: 20px;
     line-height: 1.5;
 }
 
-.container{
+/* Main Container */
+
+.container {
     max-width: 900px;
     margin: 0 auto;
-    background-color:#fffdf8;
+    background-color: #fffdf8;
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(60, 70, 50, 0.20);
 }
 
-h1{
+/* Headings */
+
+h1 {
     color: #315c4a;
-    text-align:center;
+    text-align: center;
     margin-bottom: 20px;
     font-size: 35px;
 }
 
-h2{
-    margin-bottom:10px;
+h2 {
+    margin-bottom: 10px;
 }
 
-form{
+/* Header */
+
+.Header h1 {
+    background-color: #294638;
+    color: white;
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+/* Navigation Bar */
+
+.topnav {
+    background-color: #a9bea9;
+    padding: 10px;
+    margin-top: 0;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #26382d;
+}
+
+.topnav a:hover {
+    background-color: #5f806c;
+    color: white;
+}
+
+.topnav + .container {
+    margin-top: 20px;
+}
+
+/* Forms */
+
+form {
     display: block;
 }
-fieldset{
+
+/* Fieldset */
+
+fieldset {
     border: 2px solid #6f927e;
     border-radius: 20px;
     padding: 20px;
@@ -42,7 +90,7 @@ fieldset{
     margin-bottom: 20px;
 }
 
-legend{
+legend {
     padding: 10px;
     background-color: #315c4a;
     color: white;
@@ -50,32 +98,52 @@ legend{
     font-size: 15px;
 }
 
-table{
+/* Tables */
+
+table {
     width: 100%;
     border-collapse: collapse;
 }
-tr{
+
+tr {
     margin-bottom: 10px;
 }
-td{
+
+td {
     padding: 8px;
 }
-th{
+
+th {
     padding: 10px;
     background-color: #315c4a;
     color: white;
 }
-label{
+
+/* Labels */
+
+label {
     margin-bottom: 10px;
 }
+
+/* Make the first column of forms wider */
+
+td:first-child {
+    width: 30%;
+    font-weight: bold;
+    color: #294638;
+}
+
+/* Text Inputs */
+
 input[type="text"],
 input[type="date"],
 input[type="number"],
 input[type="email"],
 input[type="file"],
 input[type="password"],
+input[type="tel"],
 select,
-textarea{
+textarea {
     width: 100%;
     padding: 10px;
     margin: 0 10px;
@@ -86,29 +154,53 @@ textarea{
     font-size: 14px;
 }
 
+/* Textarea */
+
+textarea {
+    resize: vertical;
+}
+
+/* Input Focus */
+
 input[type="text"]:focus,
 input[type="date"]:focus,
 input[type="number"]:focus,
 input[type="email"]:focus,
 input[type="file"]:focus,
 input[type="password"]:focus,
+input[type="tel"]:focus,
 select:focus,
-textarea:focus{
+textarea:focus {
     outline: none;
     border: 2px solid #5f806c;
 }
-input[type="radio"]{
+
+/* Read-only Input */
+
+input[readonly] {
+    background-color: #e1e6df;
+    color: #526156;
+    cursor: not-allowed;
+}
+
+/* Radio Buttons */
+
+input[type="radio"] {
     cursor: pointer;
     margin-right: 5px;
 }
 
-input[type="checkbox"]{
+/* Checkboxes */
+
+input[type="checkbox"] {
     cursor: pointer;
 }
 
+/* Buttons */
+
 input[type="submit"],
 input[type="reset"],
-input[type="button"]{
+input[type="button"] {
     background-color: #3f6b54;
     color: white;
     padding: 10px;
@@ -119,54 +211,29 @@ input[type="button"]{
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     cursor: pointer;
 }
-input[type="submit"]:hover{
+
+input[type="submit"]:hover {
     background-color: #294638;
 }
 
-input[type="reset"]:hover{
+input[type="reset"]:hover {
     background-color: #7f9b86;
 }
 
-input[type="button"]:hover{
+input[type="button"]:hover {
     background-color: #294638;
 }
-.Header h1{
-    background-color: #294638;
-    color: white;
-    padding: 10px;
-    margin-bottom: 0;
-}
 
-.topnav{
-    background-color: #a9bea9;
-    padding: 10px;
-    margin-top: 0;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-.topnav a{
-    float: left;
-    display: block;
-    text-align: center;
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: bold;
-    color: #26382d;
-}
-.topnav a:hover{
-    background-color: #5f806c;
-    color: white;
-}
+/* Paragraphs */
 
-.topnav + .container{
-    margin-top: 20px;
-}
-.container p{
+.container p {
     margin: 10px 0;
     font-size: 16px;
 }
-.footer h2{
+
+/* Footer */
+
+.footer h2 {
     background-color: #294638;
     color: white;
     padding: 10px;

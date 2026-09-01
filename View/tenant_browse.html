@@ -7,6 +7,7 @@
 </head>
 
 <body>
+
     <div class="position">
 
         <div class="Header">
@@ -17,6 +18,7 @@
             <a href="tenant_dashboard.html">Dashboard</a>
             <a href="tenant_browse.html">Browse Listings</a>
             <a href="tenant_bookings.html">My Bookings</a>
+            <a href="TenantProfile.php">My Profile</a>
             <a href="index.html">Logout</a>
         </div>
 
@@ -28,63 +30,85 @@
 
         <fieldset>
             <legend>Search / Filter Listings</legend>
+
             <form>
                 <table>
+
                     <tr>
                         <td>
                             <label for="location">Location:</label>
                         </td>
-
                         <td>
-                            <input type="text"id="location" name="location" placeholder="Enter location">
+                            <input type="text"
+                                   id="location"
+                                   name="location"
+                                   placeholder="Enter location">
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             <label for="minRent">Minimum Rent:</label>
                         </td>
-
                         <td>
-                            <input type="number"id="minRent" name="minRent" placeholder="Minimum rent">
+                            <input type="number"
+                                   id="minRent"
+                                   name="minRent"
+                                   placeholder="Minimum rent">
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             <label for="maxRent">Maximum Rent:</label>
                         </td>
-
                         <td>
-                            <input type="number" id="maxRent"name="maxRent" placeholder="Maximum rent">
+                            <input type="number"
+                                   id="maxRent"
+                                   name="maxRent"
+                                   placeholder="Maximum rent">
                         </td>
                     </tr>
+
                     <tr>
                         <td>
-                            <label for="propertyType"> Property Type:</label>
+                            <label for="propertyType">Property Type:</label>
                         </td>
                         <td>
                             <select id="propertyType" name="propertyType">
-                                <option value=""> Select Property Type </option>
-                                <option value="Room"> Room</option>
-                                <option value="Flat"> Flat </option>
-                                <option value="Apartment">Apartment </option>
-
+                                <option value="">Select Property Type</option>
+                                <option value="Room">Room</option>
+                                <option value="Flat">Flat</option>
+                                <option value="Apartment">Apartment</option>
                             </select>
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             <label>Gender Preference:</label>
-                     </td>
+                        </td>
                         <td>
-                            <input type="radio"id="male" name="genderPreference" value="Male">
+                            <input type="radio"
+                                   id="male"
+                                   name="genderPreference"
+                                   value="Male">
                             <label for="male">Male</label>
 
                             <br>
-                            <input type="radio" id="female" name="genderPreference"value="Female">
+
+                            <input type="radio"
+                                   id="female"
+                                   name="genderPreference"
+                                   value="Female">
                             <label for="female">Female</label>
+
                             <br>
 
-                            <input type="radio" id="any" name="genderPreference" value="Any">
+                            <input type="radio"
+                                   id="any"
+                                   name="genderPreference"
+                                   value="Any">
                             <label for="any">Any</label>
                         </td>
                     </tr>
@@ -94,10 +118,15 @@
                             <label for="furnished">Furnished:</label>
                         </td>
                         <td>
-                            <input type="checkbox" id="furnished" name="furnished">
-                            <label for="furnished"> Only show furnished properties</label>
+                            <input type="checkbox"
+                                   id="furnished"
+                                   name="furnished">
+                            <label for="furnished">
+                                Only show furnished properties
+                            </label>
                         </td>
                     </tr>
+
                     <tr>
                         <td></td>
                         <td>
@@ -107,11 +136,12 @@
                     </tr>
 
                 </table>
-
             </form>
 
         </fieldset>
+
         <br>
+
         <fieldset>
 
             <legend>Available Properties</legend>
@@ -128,7 +158,6 @@
         </fieldset>
 
     </div>
-
 
 </body>
 

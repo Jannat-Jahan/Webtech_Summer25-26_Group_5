@@ -226,6 +226,57 @@ class db
         $result=$connection->query($sql);
         return $result;
     }
+       function CheckTenant($connection,$table,$tenant_email)
+    {
+        $sql="SELECT * FROM $table
+              WHERE tenant_email='$tenant_email'";
+
+        $result=$connection->query($sql);
+        return $result;
+    }
+
+
+    function signupTenant(
+        $connection,
+        $table,
+        $tenant_name,
+        $tenant_username,
+        $tenant_dob,
+        $tenant_phone,
+        $tenant_email,
+        $tenant_address,
+        $tenant_nid,
+        $tenant_password
+    )
+    {
+        $sql="INSERT INTO $table
+        (
+            tenant_name,
+            tenant_username,
+            tenant_dob,
+            tenant_phone,
+            tenant_email,
+            tenant_address,
+            tenant_nid,
+            tenant_password
+        )
+        VALUES
+        (
+            '$tenant_name',
+            '$tenant_username',
+            '$tenant_dob',
+            '$tenant_phone',
+            '$tenant_email',
+            '$tenant_address',
+            '$tenant_nid',
+            '$tenant_password'
+        )";
+
+        $result=$connection->query($sql);
+        return $result;
+    }
 }
 
 ?>
+
+
